@@ -89,12 +89,12 @@ public class Wallet {
         }
     }
 
-    void takeCoins(Integer coinType) {
+    public void takeCoins(Integer coinType) {
         int initialValue = this.coins.get(coinType);
         this.coins.put(coinType, initialValue - 1);
     }
 
-    void takeMoneys(Integer moneyType) {
+    public void takeMoneys(Integer moneyType) {
         int initialValue = this.moneys.get(moneyType);
         this.moneys.put(moneyType, initialValue - 1);
     }
@@ -126,6 +126,7 @@ public class Wallet {
         myWallet.addMoney(10000);
         myWallet.addMoney(5000);
         myWallet.addCoin(500);
+        myWallet.addCard("Credit Card");
         myWallet.addCard("Credit Card");
         myWallet.addCard("ATM");
         myWallet.takeCard("Credit Card");
