@@ -6,15 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestWallet {
 
-    private Wallet wallet;
 
-    @BeforeEach
-    void setUp() {
-        wallet = new Wallet("John Doe");
-    }
+
 
     @Test
     void testAddMoney() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addMoney(10000);
         wallet.addMoney(5000);
         assertEquals(1, wallet.getMoneys().get(10000));
@@ -23,6 +20,7 @@ public class TestWallet {
 
     @Test
     void testAddCoin() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addCoin(500);
         wallet.addCoin(1000);
         assertEquals(1, wallet.getCoins().get(500));
@@ -31,6 +29,7 @@ public class TestWallet {
 
     @Test
     void testAddCard() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addCard("Credit Card");
         wallet.addCard("Debit Card");
         assertEquals(2, wallet.getCards().size());
@@ -40,6 +39,7 @@ public class TestWallet {
 
     @Test
     void testTakeCard() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addCard("Credit Card");
         wallet.addCard("Debit Card");
         wallet.takeCard("Credit Card");
@@ -49,6 +49,7 @@ public class TestWallet {
 
     @Test
     void testTakeCoins() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addCoin(500);
         wallet.addCoin(1000);
         wallet.takeCoins(1000);
@@ -58,6 +59,7 @@ public class TestWallet {
 
     @Test
     void testTakeMoneys() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addMoney(10000);
         wallet.addMoney(5000);
         wallet.takeMoneys(10000);
@@ -67,6 +69,7 @@ public class TestWallet {
 
     @Test
     void testGetMoneyAvailable() {
+        Wallet wallet = new Wallet("John Doe");
         wallet.addMoney(10000);
         wallet.addCoin(500);
         assertEquals(10500, wallet.getMoneyAvailable());
