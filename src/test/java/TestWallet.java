@@ -1,82 +1,74 @@
-
 import org.example.Wallet;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class TestWallet {
 
-        @Test
-        public void testAddMoney() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addMoney(10000);
-            Assertions.assertEquals(1, wallet.getMoneys());
-        }
+    private Wallet wallet;
 
-        @Test
-        public void testAddCoin() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addCoin(500);
-            wallet.addCoin(200);
-            Assertions.assertEquals(2, wallet.getCoins());
-        }
-
-        @Test
-        public void testAddCard() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addCard("Credit Card");
-            wallet.addCard("ATM Card");
-            Assertions.assertEquals(2, wallet.getCards().size());
-        }
-
-        @Test
-        public void testTakeCard() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addCard("Credit Card");
-            wallet.addCard("Credit Card");
-            wallet.takeCard("Credit Card");
-            Assertions.assertEquals(0, wallet.getCards().size());
-        }
-
-
-        @Test
-        public void testTakeCoins() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addCoin(500);
-            wallet.takeCoins(500);
-            Assertions.assertEquals(0, wallet.getCoins());
-        }
-
-        @Test
-        public void testTakeMoneys() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addMoney(10000);
-            wallet.takeMoneys(10000);
-            Assertions.assertEquals(0, wallet.getMoneys());
-        }
-
-        @Test
-        public void testCalculateCoins() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addCoin(500);
-            wallet.addCoin(100);
-            Assertions.assertEquals(600, wallet.calculateCoins());
-        }
-
-        @Test
-        public void testCalculateMoneys() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addMoney(10000);
-            wallet.addMoney(5000);
-            Assertions.assertEquals(15000, wallet.calculateMoneys());
-        }
-
-        @Test
-        public void testGetMoneyAvailable() {
-            Wallet wallet = new Wallet("Ram");
-            wallet.addMoney(10000);
-            wallet.addCoin(500);
-            Assertions.assertEquals(10500, wallet.getMoneyAvailable());
-        }
+    @BeforeEach
+    void setUp() {
+        wallet = new Wallet("John Doe");
     }
 
+    @Test
+    void testAddMoney() {
+        wallet.addMoney(10000);
+        wallet.addMoney(5000);
+        assertEquals(1, wallet.getMoneys().get(10000));
+        assertEquals(1, wallet.getMoneys().get(5000));
+    }
 
+    @Test
+    void testAddCoin() {
+        wallet.addCoin(500);
+        wallet.addCoin(1000);
+        assertEquals(1, wallet.getCoins().get(500));
+        assertEquals(1, wallet.getCoins().get(1000));
+    }
 
+    @Test
+    void testAddCard() {
+        wallet.addCard("Credit Card");
+        wallet.addCard("Debit Card");
+        assertEquals(2, wallet.getCards().size());
+        assertTrue(wallet.getCards().contains("Credit Card"));
+        assertTrue(wallet.getCards().contains("Debit Card"));
+    }
+
+    @Test
+    void testTakeCard() {
+        wallet.addCard("Credit Card");
+        wallet.addCard("Debit Card");
+        wallet.takeCard("Credit Card");
+        assertEquals(1, wallet.getCards().size());
+        assertFalse(wallet.getCards().contains("Credit Card"));
+    }
+
+    @Test
+    void testTakeCoins() {
+        wallet.addCoin(500);
+        wallet.addCoin(1000);
+        wallet.takeCoins(1000);
+        assertEquals(1, wallet.getCoins().get(500));
+        assertEquals(0, wallet.getCoins().get(1000));
+    }
+
+    @Test
+    void testTakeMoneys() {
+        wallet.addMoney(10000);
+        wallet.addMoney(5000);
+        wallet.takeMoneys(10000);
+        assertEquals(0, wallet.getMoneys().get(10000));
+        assertEquals(1, wallet.getMoneys().get(5000));
+    }
+
+    @Test
+    void testGetMoneyAvailable() {
+        wallet.addMoney(10000);
+        wallet.addCoin(500);
+        assertEquals(10500, wallet.getMoneyAvailable());
+    }
+}
